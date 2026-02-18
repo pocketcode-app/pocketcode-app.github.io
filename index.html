@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PocketCode — 내 개발 환경, 주머니 안에서.</title>
+  <meta name="description" content="데스크톱의 VS Code 개발 환경에 모바일에서 바로 접속하세요. Claude, Codex, Gemini 같은 AI 에이전트도 그대로 사용할 수 있습니다." />
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="PocketCode — 내 개발 환경, 주머니 안에서." />
+  <meta property="og:description" content="데스크톱의 VS Code 개발 환경에 모바일에서 바로 접속." />
+  <meta property="og:image" content="https://pocketcode-app.github.io/assets/og-image.png" />
+  <meta property="og:url" content="https://pocketcode-app.github.io/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PocketCode — 내 개발 환경, 주머니 안에서." />
+  <meta name="twitter:description" content="데스크톱의 VS Code 개발 환경에 모바일에서 바로 접속." />
+  <meta name="twitter:image" content="https://pocketcode-app.github.io/assets/og-image.png" />
+
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/app-icon.png" />
+
+  <style>
+    /* =========================================
+       DESIGN TOKENS
+       ========================================= */
+    :root {
+      --bg:           #1e1e1e;
+      --bg-elevated:  #252526;
+      --bg-card:      #2d2d2d;
+      --bg-card-hover:#333333;
+      --border:       #3e3e42;
+      --border-muted: #2a2a2a;
+
+      --blue:         #007acc;
+      --blue-light:   #1f9cf0;
+      --blue-dim:     rgba(0, 122, 204, 0.15);
+      --teal:         #4ec9b0;
+      --orange:       #ce9178;
+      --yellow:       #dcdcaa;
+      --green:        #4caf50;
+      --green-dim:    rgba(76, 175, 80, 0.12);
+      --red:          #f44747;
+
+      --text-primary:   #d4d4d4;
+      --text-secondary: #9d9d9d;
+      --text-muted:     #6a6a6a;
+      --text-white:     #ffffff;
+
+      --font-sans:  -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+      --font-mono:  'SF Mono', 'Cascadia Code', 'Fira Code', 'Menlo', monospace;
+
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --radius-lg:  20px;
+      --radius-xl:  32px;
+
+      --shadow-card: 0 2px 12px rgba(0,0,0,0.4), 0 0 0 1px var(--border);
+      --shadow-glow: 0 0 40px rgba(0, 122, 204, 0.2);
+
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* =========================================
+       RESET & BASE
+       ========================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--blue-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { display: block; max-width: 100%; }
+
+    /* =========================================
+       TOPLINE STRIP
+       ========================================= */
+    .topline {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 50%, var(--blue) 100%);
+    }
+
+    /* =========================================
+       NAV
+       ========================================= */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(30, 30, 30, 0.88);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border-muted);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+    }
+
+    .nav-brand-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-white);
+      letter-spacing: -0.2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition), background var(--transition);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-white);
+      background: rgba(255,255,255,0.06);
+      text-decoration: none;
+    }
+
+    .nav-github {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary) !important;
+      padding: 5px 12px !important;
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      transition: color var(--transition), border-color var(--transition), background var(--transition) !important;
+    }
+
+    .nav-github:hover {
+      color: var(--text-white) !important;
+      border-color: var(--text-secondary) !important;
+      background: rgba(255,255,255,0.05) !important;
+    }
+
+    /* =========================================
+       HERO
+       ========================================= */
+    .hero {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 96px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      overflow: hidden;
+    }
+
+    /* Background grid pattern */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border-muted) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-muted) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 80%);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* Glow blob */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(0, 122, 204, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+    }
+
+    .hero-icon-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 26.7%; /* iOS icon squircle approximation */
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 8px 32px rgba(0,0,0,0.5),
+        0 0 60px rgba(0, 122, 204, 0.25);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow var(--transition);
+    }
+
+    .hero-icon:hover {
+      transform: scale(1.06) translateY(-2px);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.12),
+        0 16px 48px rgba(0,0,0,0.6),
+        0 0 80px rgba(0, 122, 204, 0.35);
+    }
+
+    /* "OPEN SOURCE" badge */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(78, 201, 176, 0.1);
+      border: 1px solid rgba(78, 201, 176, 0.25);
+      border-radius: 100px;
+      padding: 5px 12px;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .hero-title {
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--text-white);
+    }
+
+    .hero-title-accent {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-tagline {
+      font-size: clamp(16px, 3vw, 22px);
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    /* Inline code style in tagline */
+    .hero-tagline code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--bg-card);
+      color: var(--yellow);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 4px 16px rgba(0, 122, 204, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-light);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset, 0 8px 24px rgba(0, 122, 204, 0.45);
+      transform: translateY(-1px);
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      color: var(--text-primary);
+      border-color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      text-decoration: none;
+    }
+
+    .btn-disabled {
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .btn-disabled:hover {
+      text-decoration: none;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      transform: none;
+    }
+
+    /* =========================================
+       SECTION COMMONS
+       ========================================= */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: normal;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-white);
+      line-height: 1.15;
+    }
+
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--text-secondary);
+      margin-top: 12px;
+      max-width: 560px;
+      line-height: 1.55;
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+    }
+
+    /* Divider */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* =========================================
+       FEATURES GRID
+       ========================================= */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 0;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .feature-card {
+      position: relative;
+      padding: 36px 32px;
+      border: 0.5px solid var(--border);
+      margin: -0.5px;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .feature-icon svg {
+      width: 28px;
+      height: 28px;
+      opacity: 0.9;
+    }
+
+    .feature-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Card accent colors */
+    .card-blue  { --card-accent: #007acc; }
+    .card-teal  { --card-accent: #4ec9b0; }
+    .card-orange{ --card-accent: #ce9178; }
+    .card-yellow{ --card-accent: #dcdcaa; }
+    .card-green { --card-accent: #4caf50; }
+    .card-purple{ --card-accent: #c586c0; }
+
+    /* =========================================
+       SCREENSHOTS
+       ========================================= */
+    #screenshots {
+      padding-top: 40px;
+    }
+
+    .screenshots-grid {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .phone-frame-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* iPhone-style CSS frame */
+    .phone-frame {
+      position: relative;
+      width: 240px;
+      padding: 14px 12px;
+      background: #1a1a1a;
+      border-radius: 44px;
+      border: 1.5px solid #3a3a3a;
+      box-shadow:
+        0 0 0 1px #111 inset,
+        0 24px 64px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(255,255,255,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow var(--transition);
+    }
+
+    .phone-frame:hover {
+      transform: scale(1.03) translateY(-4px);
+      box-shadow:
+        0 0 0 1px #111 inset,
+        0 36px 80px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(255,255,255,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.1),
+        0 0 40px rgba(0, 122, 204, 0.15);
+    }
+
+    /* Side buttons */
+    .phone-frame::before {
+      content: '';
+      position: absolute;
+      left: -3px;
+      top: 80px;
+      width: 3px;
+      height: 32px;
+      background: #2e2e2e;
+      border-radius: 2px 0 0 2px;
+      box-shadow: 0 40px 0 #2e2e2e, 0 76px 0 #2e2e2e;
+    }
+
+    .phone-frame::after {
+      content: '';
+      position: absolute;
+      right: -3px;
+      top: 100px;
+      width: 3px;
+      height: 48px;
+      background: #2e2e2e;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .phone-screen {
+      border-radius: 32px;
+      overflow: hidden;
+      background: var(--bg);
+      line-height: 0; /* Remove inline gap */
+    }
+
+    .phone-screen img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .screenshot-caption {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      font-family: var(--font-mono);
+    }
+
+    .screenshot-caption strong {
+      color: var(--text-secondary);
+      font-weight: 500;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* =========================================
+       OPEN SOURCE / TECH STACK SECTION
+       ========================================= */
+    .oss-section {
+      position: relative;
+    }
+
+    .oss-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 56px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Code snippet decoration */
+    .oss-card::before {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0, 122, 204, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .oss-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .tech-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      transition: all var(--transition);
+    }
+
+    .tech-tag:hover {
+      border-color: var(--blue);
+      color: var(--blue-light);
+      background: var(--blue-dim);
+    }
+
+    .tech-tag.highlight {
+      border-color: rgba(78,201,176,0.3);
+      color: var(--teal);
+      background: rgba(78,201,176,0.08);
+    }
+
+    .oss-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      min-width: 160px;
+    }
+
+    .github-star-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 20px;
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      transition: all var(--transition);
+      text-decoration: none;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .github-star-btn:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255,255,255,0.15);
+      color: var(--text-white);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .star-icon { color: #e3b341; }
+
+    /* Code block decoration */
+    .code-snippet {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-snippet::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--blue), transparent);
+      opacity: 0.5;
+    }
+
+    .code-kw { color: #569cd6; }
+    .code-fn { color: var(--yellow); }
+    .code-str { color: var(--orange); }
+    .code-cm { color: #6a9955; }
+    .code-type { color: var(--teal); }
+
+    /* =========================================
+       FOOTER
+       ========================================= */
+    footer {
+      border-top: 1px solid var(--border-muted);
+      background: var(--bg-elevated);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      opacity: 0.85;
+    }
+
+    .footer-brand-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* =========================================
+       SCROLL ANIMATIONS
+       ========================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+    .reveal-delay-5 { transition-delay: 0.40s; }
+    .reveal-delay-6 { transition-delay: 0.48s; }
+
+    /* =========================================
+       RESPONSIVE
+       ========================================= */
+    @media (max-width: 768px) {
+      .hero { padding: 64px 20px 56px; }
+
+      .nav-links .hide-mobile { display: none; }
+
+      .oss-card {
+        grid-template-columns: 1fr;
+        padding: 36px 28px;
+      }
+
+      .oss-actions {
+        flex-direction: row;
+        min-width: unset;
+        width: 100%;
+      }
+
+      .oss-actions .github-star-btn {
+        flex: 1;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-frame {
+        width: 200px;
+      }
+
+      section {
+        padding: 60px 20px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; }
+      .phone-frame { width: 180px; }
+      .screenshots-grid { gap: 24px; }
+    }
+
+    @media (prefers-color-scheme: light) {
+      /* We intentionally keep dark-only for this product */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top accent line -->
+  <div class="topline"></div>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-brand" href="#">
+        <img src="assets/app-icon.png" alt="PocketCode icon" />
+        <span class="nav-brand-name">PocketCode</span>
+      </a>
+      <div class="nav-links">
+        <a href="#screenshots" class="hide-mobile">스크린샷</a>
+        <a href="#features" class="hide-mobile">주요 기능</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-icon-wrap reveal">
+        <img class="hero-icon" src="assets/app-icon.png" alt="PocketCode App Icon" />
+      </div>
+
+      <h1 class="hero-title reveal reveal-delay-1">
+        <span class="hero-title-accent">PocketCode</span>
+      </h1>
+
+      <p class="hero-tagline reveal reveal-delay-2">
+        내 개발 환경, 주머니 안에서.<br />
+        데스크톱의 VS Code에 모바일에서 바로 접속하세요.<br />
+        <code>Claude</code> <code>Codex</code> <code>Gemini</code> 같은<br />
+        AI 에이전트도 그대로.
+      </p>
+
+      <div class="hero-ctas reveal reveal-delay-3">
+        <span class="btn btn-disabled" aria-label="App Store 출시 예정">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+          App Store 출시 예정
+        </span>
+        <span class="btn btn-disabled" aria-label="Google Play 출시 예정">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 1.33-2.922 1.691-2.015-2.015 2.635-1.006zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/>
+          </svg>
+          Google Play 출시 예정
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Screenshots -->
+  <section id="screenshots">
+    <div class="section-header">
+      <p class="section-label reveal">스크린샷</p>
+      <h2 class="section-title reveal reveal-delay-1">호스트 등록하고,<br />바로 코딩 시작.</h2>
+      <p class="section-subtitle reveal reveal-delay-2">개발 서버를 등록하면 폴더를 골라 바로 접속할 수 있습니다.</p>
+    </div>
+
+    <div class="screenshots-grid">
+      <div class="phone-frame-wrap reveal reveal-delay-1">
+        <div class="phone-frame" role="img" aria-label="PocketCode에서 Claude Code 사용 화면">
+          <div class="phone-screen">
+            <img src="assets/screenshot-editor.png" alt="PocketCode에서 Claude Code를 사용하는 모습" loading="lazy" />
+          </div>
+        </div>
+        <div class="screenshot-caption">
+          <strong>AI 에이전트</strong>
+          모바일에서 Claude Code 사용
+        </div>
+      </div>
+
+      <div class="phone-frame-wrap reveal reveal-delay-2">
+        <div class="phone-frame" role="img" aria-label="PocketCode VS Code 에디터 화면">
+          <div class="phone-screen">
+            <img src="assets/screenshot-vscode.png" alt="PocketCode에서 VS Code 에디터에 접속한 모습" loading="lazy" />
+          </div>
+        </div>
+        <div class="screenshot-caption">
+          <strong>VS Code 에디터</strong>
+          익숙한 환경 그대로
+        </div>
+      </div>
+
+      <div class="phone-frame-wrap reveal reveal-delay-3">
+        <div class="phone-frame" role="img" aria-label="PocketCode 호스트 목록 화면">
+          <div class="phone-screen">
+            <img src="assets/screenshot-hosts.png" alt="PocketCode Tunnel 호스트가 등록된 화면" loading="lazy" />
+          </div>
+        </div>
+        <div class="screenshot-caption">
+          <strong>호스트 목록</strong>
+          여러 개발 서버를 한눈에
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="section-header">
+      <p class="section-label reveal">주요 기능</p>
+      <h2 class="section-title reveal reveal-delay-1">브라우저 그 이상의 경험.</h2>
+      <p class="section-subtitle reveal reveal-delay-2">Safari로 vscode.dev를 여는 것과는 차원이 다릅니다.<br />네이티브 기능을 활용한 모바일 원격 개발 클라이언트.</p>
+    </div>
+
+    <div class="features-grid reveal reveal-delay-3">
+      <!-- Feature 1: AI Agents -->
+      <div class="feature-card card-purple">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c586c0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3 class="feature-name">AI 에이전트, 그대로</h3>
+        <p class="feature-desc">데스크톱의 개발 환경을 그대로 가져오니까 Claude, Codex, Gemini 같은 AI 코딩 에이전트도 모바일에서 바로 사용할 수 있습니다.</p>
+      </div>
+
+      <!-- Feature 2: Host Management -->
+      <div class="feature-card card-blue">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#007acc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+            <path d="M7 8l3 3-3 3"/>
+            <path d="M13 14h4"/>
+          </svg>
+        </div>
+        <h3 class="feature-name">호스트 관리</h3>
+        <p class="feature-desc">여러 개발 서버를 등록하고 관리하세요. VS Code Tunnel과 serve-web 두 가지 연결 방식을 모두 지원합니다.</p>
+      </div>
+
+      <!-- Feature 3: Zero Install -->
+      <div class="feature-card card-green">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="feature-name">설치 없이 바로 연결</h3>
+        <p class="feature-desc">데스크톱에 별도 프로그램을 설치할 필요가 없습니다. VS Code의 기본 터널 기능만으로 연결되며, 인증은 모두 앱 안에서 처리됩니다.</p>
+      </div>
+
+      <!-- Feature 4: Biometric Auth -->
+      <div class="feature-card card-orange">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ce9178" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3 class="feature-name">생체 인증 앱 잠금</h3>
+        <p class="feature-desc">Face ID 또는 Touch ID로 앱을 보호하세요. 앱 시작 시, 백그라운드 복귀 시 등 잠금 타이밍을 세밀하게 설정할 수 있습니다.</p>
+      </div>
+
+      <!-- Feature 5: Siri -->
+      <div class="feature-card card-yellow">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#dcdcaa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </div>
+        <h3 class="feature-name">Siri 단축어</h3>
+        <p class="feature-desc">"PocketCode에 연결"이라고 말하면 자주 사용하는 호스트에 바로 접속. 홈 화면에 단축어를 추가하여 원탭으로 개발 환경에 접근하세요.</p>
+      </div>
+
+      <!-- Feature 6: Connection Monitor -->
+      <div class="feature-card card-teal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4ec9b0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+            <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+            <circle cx="12" cy="20" r="1" fill="#4ec9b0"/>
+          </svg>
+        </div>
+        <h3 class="feature-name">연결 상태 모니터링</h3>
+        <p class="feature-desc">네트워크 상태를 실시간으로 감지하여 연결 끊김을 즉시 알려드립니다. 불안정한 연결은 자동으로 재연결을 시도합니다.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="assets/app-icon.png" alt="PocketCode" />
+        <span class="footer-brand-name">PocketCode</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener">문의 및 피드백</a>
+
+      </div>
+
+      <p class="footer-copy">
+        &copy; 2026 PocketCode.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for scroll reveal animations
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>
