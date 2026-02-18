@@ -179,6 +179,76 @@
     }
 
     /* =========================================
+       LANGUAGE SWITCHER
+       ========================================= */
+    .lang-switcher {
+      position: relative;
+      margin-left: 8px;
+    }
+
+    .lang-switcher-btn {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      transition: all var(--transition);
+      line-height: 1;
+    }
+
+    .lang-switcher-btn:hover {
+      color: var(--text-white);
+      border-color: var(--text-muted);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 6px;
+      min-width: 140px;
+      z-index: 200;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .lang-dropdown.open {
+      display: block;
+    }
+
+    .lang-option {
+      display: block;
+      width: 100%;
+      padding: 6px 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: all var(--transition);
+      font-family: var(--font-sans);
+    }
+
+    .lang-option:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-white);
+    }
+
+    .lang-option.active {
+      color: var(--blue-light);
+    }
+
+    /* =========================================
        HERO
        ========================================= */
     .hero {
@@ -870,8 +940,23 @@
         <span class="nav-brand-name">PocketCode</span>
       </a>
       <div class="nav-links">
-        <a href="#screenshots" class="hide-mobile">스크린샷</a>
-        <a href="#features" class="hide-mobile">주요 기능</a>
+        <a href="#screenshots" class="hide-mobile" data-i18n="nav.screenshots">스크린샷</a>
+        <a href="#features" class="hide-mobile" data-i18n="nav.features">주요 기능</a>
+        <div class="lang-switcher">
+          <button class="lang-switcher-btn" aria-label="Language">KO</button>
+          <div class="lang-dropdown">
+            <button class="lang-option" data-lang="en">English</button>
+            <button class="lang-option active" data-lang="ko">한국어</button>
+            <button class="lang-option" data-lang="ja">日本語</button>
+            <button class="lang-option" data-lang="zh-CN">简体中文</button>
+            <button class="lang-option" data-lang="es">Español</button>
+            <button class="lang-option" data-lang="de">Deutsch</button>
+            <button class="lang-option" data-lang="fr">Français</button>
+            <button class="lang-option" data-lang="pt">Português</button>
+            <button class="lang-option" data-lang="ru">Русский</button>
+            <button class="lang-option" data-lang="it">Italiano</button>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -887,7 +972,7 @@
         <span class="hero-title-accent">PocketCode</span>
       </h1>
 
-      <p class="hero-tagline reveal reveal-delay-2">
+      <p class="hero-tagline reveal reveal-delay-2" data-i18n-html="hero.tagline">
         내 개발 환경, 주머니 안에서.<br />
         데스크톱의 VS Code에 모바일에서 바로 접속하세요.<br />
         <code>Claude</code> <code>Codex</code> <code>Gemini</code> 같은<br />
@@ -895,17 +980,17 @@
       </p>
 
       <div class="hero-ctas reveal reveal-delay-3">
-        <span class="btn btn-disabled" aria-label="App Store 출시 예정">
+        <span class="btn btn-disabled">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
           </svg>
-          App Store 출시 예정
+          <span data-i18n="hero.appstore">App Store 출시 예정</span>
         </span>
-        <span class="btn btn-disabled" aria-label="Google Play 출시 예정">
+        <span class="btn btn-disabled">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 1.33-2.922 1.691-2.015-2.015 2.635-1.006zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/>
           </svg>
-          Google Play 출시 예정
+          <span data-i18n="hero.playstore">Google Play 출시 예정</span>
         </span>
       </div>
     </div>
@@ -916,45 +1001,45 @@
   <!-- Screenshots -->
   <section id="screenshots">
     <div class="section-header">
-      <p class="section-label reveal">스크린샷</p>
-      <h2 class="section-title reveal reveal-delay-1">호스트 등록하고,<br />바로 코딩 시작.</h2>
-      <p class="section-subtitle reveal reveal-delay-2">개발 서버를 등록하면 폴더를 골라 바로 접속할 수 있습니다.</p>
+      <p class="section-label reveal" data-i18n="screenshots.label">스크린샷</p>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n-html="screenshots.title">호스트 등록하고,<br />바로 코딩 시작.</h2>
+      <p class="section-subtitle reveal reveal-delay-2" data-i18n="screenshots.subtitle">개발 서버를 등록하면 폴더를 골라 바로 접속할 수 있습니다.</p>
     </div>
 
     <div class="screenshots-grid">
       <div class="phone-frame-wrap reveal reveal-delay-1">
-        <div class="phone-frame" role="img" aria-label="PocketCode에서 Claude Code 사용 화면">
+        <div class="phone-frame">
           <div class="phone-screen">
-            <img src="assets/screenshot-editor.png" alt="PocketCode에서 Claude Code를 사용하는 모습" loading="lazy" />
+            <img src="assets/screenshot-editor.png" alt="PocketCode Claude Code" loading="lazy" />
           </div>
         </div>
         <div class="screenshot-caption">
-          <strong>AI 에이전트</strong>
-          모바일에서 Claude Code 사용
+          <strong data-i18n="screenshots.caption1.title">AI 에이전트</strong>
+          <span data-i18n="screenshots.caption1.desc">모바일에서 Claude Code 사용</span>
         </div>
       </div>
 
       <div class="phone-frame-wrap reveal reveal-delay-2">
-        <div class="phone-frame" role="img" aria-label="PocketCode VS Code 에디터 화면">
+        <div class="phone-frame">
           <div class="phone-screen">
-            <img src="assets/screenshot-vscode.png" alt="PocketCode에서 VS Code 에디터에 접속한 모습" loading="lazy" />
+            <img src="assets/screenshot-vscode.png" alt="PocketCode VS Code" loading="lazy" />
           </div>
         </div>
         <div class="screenshot-caption">
-          <strong>VS Code 에디터</strong>
-          익숙한 환경 그대로
+          <strong data-i18n="screenshots.caption2.title">VS Code 에디터</strong>
+          <span data-i18n="screenshots.caption2.desc">익숙한 환경 그대로</span>
         </div>
       </div>
 
       <div class="phone-frame-wrap reveal reveal-delay-3">
-        <div class="phone-frame" role="img" aria-label="PocketCode 호스트 목록 화면">
+        <div class="phone-frame">
           <div class="phone-screen">
-            <img src="assets/screenshot-hosts.png" alt="PocketCode Tunnel 호스트가 등록된 화면" loading="lazy" />
+            <img src="assets/screenshot-hosts.png" alt="PocketCode Hosts" loading="lazy" />
           </div>
         </div>
         <div class="screenshot-caption">
-          <strong>호스트 목록</strong>
-          여러 개발 서버를 한눈에
+          <strong data-i18n="screenshots.caption3.title">호스트 목록</strong>
+          <span data-i18n="screenshots.caption3.desc">여러 개발 서버를 한눈에</span>
         </div>
       </div>
     </div>
@@ -965,9 +1050,9 @@
   <!-- Features -->
   <section id="features">
     <div class="section-header">
-      <p class="section-label reveal">주요 기능</p>
-      <h2 class="section-title reveal reveal-delay-1">브라우저 그 이상의 경험.</h2>
-      <p class="section-subtitle reveal reveal-delay-2">Safari로 vscode.dev를 여는 것과는 차원이 다릅니다.<br />네이티브 기능을 활용한 모바일 원격 개발 클라이언트.</p>
+      <p class="section-label reveal" data-i18n="features.label">주요 기능</p>
+      <h2 class="section-title reveal reveal-delay-1" data-i18n="features.title">브라우저 그 이상의 경험.</h2>
+      <p class="section-subtitle reveal reveal-delay-2" data-i18n-html="features.subtitle">Safari로 vscode.dev를 여는 것과는 차원이 다릅니다.<br />네이티브 기능을 활용한 모바일 원격 개발 클라이언트.</p>
     </div>
 
     <div class="features-grid reveal reveal-delay-3">
@@ -980,8 +1065,8 @@
             <path d="M2 12l10 5 10-5"/>
           </svg>
         </div>
-        <h3 class="feature-name">AI 에이전트, 그대로</h3>
-        <p class="feature-desc">데스크톱의 개발 환경을 그대로 가져오니까 Claude, Codex, Gemini 같은 AI 코딩 에이전트도 모바일에서 바로 사용할 수 있습니다.</p>
+        <h3 class="feature-name" data-i18n="features.ai.name">AI 에이전트, 그대로</h3>
+        <p class="feature-desc" data-i18n="features.ai.desc">데스크톱의 개발 환경을 그대로 가져오니까 Claude, Codex, Gemini 같은 AI 코딩 에이전트도 모바일에서 바로 사용할 수 있습니다.</p>
       </div>
 
       <!-- Feature 2: Host Management -->
@@ -994,8 +1079,8 @@
             <path d="M13 14h4"/>
           </svg>
         </div>
-        <h3 class="feature-name">호스트 관리</h3>
-        <p class="feature-desc">여러 개발 서버를 등록하고 관리하세요. VS Code Tunnel과 serve-web 두 가지 연결 방식을 모두 지원합니다.</p>
+        <h3 class="feature-name" data-i18n="features.host.name">호스트 관리</h3>
+        <p class="feature-desc" data-i18n="features.host.desc">여러 개발 서버를 등록하고 관리하세요. VS Code Tunnel과 serve-web 두 가지 연결 방식을 모두 지원합니다.</p>
       </div>
 
       <!-- Feature 3: Zero Install -->
@@ -1005,8 +1090,8 @@
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
         </div>
-        <h3 class="feature-name">설치 없이 바로 연결</h3>
-        <p class="feature-desc">데스크톱에 별도 프로그램을 설치할 필요가 없습니다. VS Code의 기본 터널 기능만으로 연결되며, 인증은 모두 앱 안에서 처리됩니다.</p>
+        <h3 class="feature-name" data-i18n="features.zero.name">설치 없이 바로 연결</h3>
+        <p class="feature-desc" data-i18n="features.zero.desc">데스크톱에 별도 프로그램을 설치할 필요가 없습니다. VS Code의 기본 터널 기능만으로 연결되며, 인증은 모두 앱 안에서 처리됩니다.</p>
       </div>
 
       <!-- Feature 4: Biometric Auth -->
@@ -1017,8 +1102,8 @@
             <path d="M9 12l2 2 4-4"/>
           </svg>
         </div>
-        <h3 class="feature-name">생체 인증 앱 잠금</h3>
-        <p class="feature-desc">Face ID 또는 Touch ID로 앱을 보호하세요. 앱 시작 시, 백그라운드 복귀 시 등 잠금 타이밍을 세밀하게 설정할 수 있습니다.</p>
+        <h3 class="feature-name" data-i18n="features.bio.name">생체 인증 앱 잠금</h3>
+        <p class="feature-desc" data-i18n="features.bio.desc">Face ID 또는 Touch ID로 앱을 보호하세요. 앱 시작 시, 백그라운드 복귀 시 등 잠금 타이밍을 세밀하게 설정할 수 있습니다.</p>
       </div>
 
       <!-- Feature 5: Siri -->
@@ -1031,8 +1116,8 @@
             <line x1="8" y1="23" x2="16" y2="23"/>
           </svg>
         </div>
-        <h3 class="feature-name">Siri 단축어</h3>
-        <p class="feature-desc">"PocketCode에 연결"이라고 말하면 자주 사용하는 호스트에 바로 접속. 홈 화면에 단축어를 추가하여 원탭으로 개발 환경에 접근하세요.</p>
+        <h3 class="feature-name" data-i18n="features.siri.name">Siri 단축어</h3>
+        <p class="feature-desc" data-i18n="features.siri.desc">"PocketCode에 연결"이라고 말하면 자주 사용하는 호스트에 바로 접속. 홈 화면에 단축어를 추가하여 원탭으로 개발 환경에 접근하세요.</p>
       </div>
 
       <!-- Feature 6: Connection Monitor -->
@@ -1045,8 +1130,8 @@
             <circle cx="12" cy="20" r="1" fill="#4ec9b0"/>
           </svg>
         </div>
-        <h3 class="feature-name">연결 상태 모니터링</h3>
-        <p class="feature-desc">네트워크 상태를 실시간으로 감지하여 연결 끊김을 즉시 알려드립니다. 불안정한 연결은 자동으로 재연결을 시도합니다.</p>
+        <h3 class="feature-name" data-i18n="features.conn.name">연결 상태 모니터링</h3>
+        <p class="feature-desc" data-i18n="features.conn.desc">네트워크 상태를 실시간으로 감지하여 연결 끊김을 즉시 알려드립니다. 불안정한 연결은 자동으로 재연결을 시도합니다.</p>
       </div>
     </div>
   </section>
@@ -1061,7 +1146,7 @@
       </div>
 
       <div class="footer-links">
-        <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener">문의 및 피드백</a>
+        <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener" data-i18n="footer.feedback">문의 및 피드백</a>
 
       </div>
 
@@ -1090,6 +1175,7 @@
       els.forEach(function (el) { observer.observe(el); });
     })();
   </script>
+  <script src="i18n.js"></script>
 
 </body>
 </html>

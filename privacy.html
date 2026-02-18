@@ -55,11 +55,34 @@
     }
     .nav-inner {
       max-width: 800px; margin: 0 auto; padding: 0 24px; height: 52px;
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
     }
     .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .nav-brand img { width: 28px; height: 28px; border-radius: 7px; }
     .nav-brand-name { font-size: 15px; font-weight: 600; color: var(--text-white); letter-spacing: -0.2px; }
+
+    /* Language Switcher */
+    .lang-switcher { position: relative; }
+    .lang-switcher-btn {
+      font-size: 12px; font-weight: 600; color: var(--text-secondary);
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 5px 10px; cursor: pointer; font-family: var(--font-mono);
+      letter-spacing: 0.05em; transition: all var(--transition); line-height: 1;
+    }
+    .lang-switcher-btn:hover { color: var(--text-white); border-color: var(--text-muted); }
+    .lang-dropdown {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0;
+      background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-md);
+      padding: 6px; min-width: 140px; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .lang-dropdown.open { display: block; }
+    .lang-option {
+      display: block; width: 100%; padding: 6px 12px; font-size: 13px; color: var(--text-secondary);
+      background: none; border: none; border-radius: var(--radius-sm); cursor: pointer;
+      text-align: left; transition: all var(--transition); font-family: var(--font-sans);
+    }
+    .lang-option:hover { background: rgba(255,255,255,0.06); color: var(--text-white); }
+    .lang-option.active { color: var(--blue-light); }
 
     .content {
       max-width: 800px;
@@ -155,88 +178,105 @@
         <img src="assets/app-icon.png" alt="PocketCode" />
         <span class="nav-brand-name">PocketCode</span>
       </a>
+      <div class="lang-switcher">
+        <button class="lang-switcher-btn" aria-label="Language">KO</button>
+        <div class="lang-dropdown">
+          <button class="lang-option" data-lang="en">English</button>
+          <button class="lang-option active" data-lang="ko">한국어</button>
+          <button class="lang-option" data-lang="ja">日本語</button>
+          <button class="lang-option" data-lang="zh-CN">简体中文</button>
+          <button class="lang-option" data-lang="es">Español</button>
+          <button class="lang-option" data-lang="de">Deutsch</button>
+          <button class="lang-option" data-lang="fr">Français</button>
+          <button class="lang-option" data-lang="pt">Português</button>
+          <button class="lang-option" data-lang="ru">Русский</button>
+          <button class="lang-option" data-lang="it">Italiano</button>
+        </div>
+      </div>
     </div>
   </nav>
 
   <div class="content">
-    <h1 class="page-title">개인정보 처리방침</h1>
-    <p class="page-meta">시행일: 2026년 2월 18일</p>
+    <h1 class="page-title" data-i18n="privacy.title">개인정보 처리방침</h1>
+    <p class="page-meta" data-i18n="privacy.effective.date">시행일: 2026년 2월 18일</p>
 
     <div class="highlight-box">
-      <p><strong>PocketCode는 사용자의 개인정보를 외부 서버로 수집하거나 전송하지 않습니다.</strong> 모든 데이터는 사용자의 기기에만 저장되며, 앱 개발자는 이에 접근할 수 없습니다.</p>
+      <p data-i18n-html="privacy.highlight"><strong>PocketCode는 사용자의 개인정보를 외부 서버로 수집하거나 전송하지 않습니다.</strong> 모든 데이터는 사용자의 기기에만 저장되며, 앱 개발자는 이에 접근할 수 없습니다.</p>
     </div>
 
-    <h2>1. 수집하는 정보</h2>
-    <p>PocketCode는 앱 기능 제공을 위해 다음 정보를 <strong>사용자의 기기 내에서만</strong> 처리합니다.</p>
+    <h2 data-i18n="privacy.s1.title">1. 수집하는 정보</h2>
+    <p data-i18n-html="privacy.s1.intro">PocketCode는 앱 기능 제공을 위해 다음 정보를 <strong>사용자의 기기 내에서만</strong> 처리합니다.</p>
     <ul>
-      <li><strong>호스트 구성 정보</strong> — 사용자가 등록한 개발 서버의 이름, 주소, 포트, 연결 방식 등</li>
-      <li><strong>최근 폴더 기록</strong> — 접속한 폴더 경로 및 마지막 접근 시간</li>
-      <li><strong>인증 정보</strong> — GitHub 또는 Microsoft 계정의 OAuth 인증 쿠키 (WebKit에서 관리)</li>
-      <li><strong>연결 토큰</strong> — serve-web 방식의 호스트에 필요한 접속 토큰 (iOS 키체인에 암호화 저장)</li>
-      <li><strong>앱 잠금 설정</strong> — 생체 인증 사용 여부 및 잠금 타이밍 설정</li>
+      <li data-i18n-html="privacy.s1.item1"><strong>호스트 구성 정보</strong> — 사용자가 등록한 개발 서버의 이름, 주소, 포트, 연결 방식 등</li>
+      <li data-i18n-html="privacy.s1.item2"><strong>최근 폴더 기록</strong> — 접속한 폴더 경로 및 마지막 접근 시간</li>
+      <li data-i18n-html="privacy.s1.item3"><strong>인증 정보</strong> — GitHub 또는 Microsoft 계정의 OAuth 인증 쿠키 (WebKit에서 관리)</li>
+      <li data-i18n-html="privacy.s1.item4"><strong>연결 토큰</strong> — serve-web 방식의 호스트에 필요한 접속 토큰 (iOS 키체인에 암호화 저장)</li>
+      <li data-i18n-html="privacy.s1.item5"><strong>앱 잠금 설정</strong> — 생체 인증 사용 여부 및 잠금 타이밍 설정</li>
     </ul>
 
-    <h2>2. 정보의 저장 위치</h2>
-    <p>모든 데이터는 사용자의 기기 내에 저장되며, 외부 서버로 전송되지 않습니다.</p>
+    <h2 data-i18n="privacy.s2.title">2. 정보의 저장 위치</h2>
+    <p data-i18n="privacy.s2.intro">모든 데이터는 사용자의 기기 내에 저장되며, 외부 서버로 전송되지 않습니다.</p>
     <ul>
-      <li><strong>기기 내 데이터베이스</strong> (SwiftData) — 호스트 목록, 최근 폴더</li>
-      <li><strong>iOS 키체인</strong> — 연결 토큰 (iOS에 의해 암호화)</li>
-      <li><strong>WebKit 저장소</strong> — 인증 쿠키, VS Code 에디터 캐시</li>
-      <li><strong>UserDefaults</strong> — 앱 잠금 설정 등 환경 설정</li>
+      <li data-i18n-html="privacy.s2.item1"><strong>기기 내 데이터베이스</strong> (SwiftData) — 호스트 목록, 최근 폴더</li>
+      <li data-i18n-html="privacy.s2.item2"><strong>iOS 키체인</strong> — 연결 토큰 (iOS에 의해 암호화)</li>
+      <li data-i18n-html="privacy.s2.item3"><strong>WebKit 저장소</strong> — 인증 쿠키, VS Code 에디터 캐시</li>
+      <li data-i18n-html="privacy.s2.item4"><strong>UserDefaults</strong> — 앱 잠금 설정 등 환경 설정</li>
     </ul>
 
-    <h2>3. 외부 서비스 연동</h2>
-    <p>PocketCode는 다음 서비스에 직접 연결됩니다. 이는 앱의 핵심 기능을 위한 것이며, 분석이나 추적 목적이 아닙니다.</p>
+    <h2 data-i18n="privacy.s3.title">3. 외부 서비스 연동</h2>
+    <p data-i18n="privacy.s3.intro">PocketCode는 다음 서비스에 직접 연결됩니다. 이는 앱의 핵심 기능을 위한 것이며, 분석이나 추적 목적이 아닙니다.</p>
     <ul>
-      <li><strong>vscode.dev</strong> — VS Code 웹 에디터 인터페이스</li>
-      <li><strong>github.com</strong> — GitHub 계정 인증</li>
-      <li><strong>login.microsoftonline.com</strong> — Microsoft 계정 인증</li>
-      <li><strong>사용자가 등록한 개발 서버</strong> — VS Code Tunnel 또는 serve-web 연결</li>
+      <li data-i18n-html="privacy.s3.item1"><strong>vscode.dev</strong> — VS Code 웹 에디터 인터페이스</li>
+      <li data-i18n-html="privacy.s3.item2"><strong>github.com</strong> — GitHub 계정 인증</li>
+      <li data-i18n-html="privacy.s3.item3"><strong>login.microsoftonline.com</strong> — Microsoft 계정 인증</li>
+      <li data-i18n-html="privacy.s3.item4"><strong>사용자가 등록한 개발 서버</strong> — VS Code Tunnel 또는 serve-web 연결</li>
     </ul>
-    <p>PocketCode는 Firebase, Amplitude, Sentry 등 <strong>외부 분석 또는 오류 보고 SDK를 사용하지 않습니다.</strong></p>
+    <p data-i18n-html="privacy.s3.outro">PocketCode는 Firebase, Amplitude, Sentry 등 <strong>외부 분석 또는 오류 보고 SDK를 사용하지 않습니다.</strong></p>
 
-    <h2>4. 생체 인증</h2>
-    <p>PocketCode는 앱 잠금 기능을 위해 Face ID 또는 Touch ID를 사용할 수 있습니다. 생체 인식 데이터는 iOS에 의해 처리되며, PocketCode는 생체 정보를 직접 저장하거나 접근하지 않습니다. 인증 결과(성공 또는 실패)만 앱 내에서 확인합니다.</p>
+    <h2 data-i18n="privacy.s4.title">4. 생체 인증</h2>
+    <p data-i18n="privacy.s4.text">PocketCode는 앱 잠금 기능을 위해 Face ID 또는 Touch ID를 사용할 수 있습니다. 생체 인식 데이터는 iOS에 의해 처리되며, PocketCode는 생체 정보를 직접 저장하거나 접근하지 않습니다. 인증 결과(성공 또는 실패)만 앱 내에서 확인합니다.</p>
 
-    <h2>5. 수집하지 않는 정보</h2>
-    <p>PocketCode는 다음 정보를 수집하지 않습니다.</p>
+    <h2 data-i18n="privacy.s5.title">5. 수집하지 않는 정보</h2>
+    <p data-i18n="privacy.s5.intro">PocketCode는 다음 정보를 수집하지 않습니다.</p>
     <ul>
-      <li>위치 정보</li>
-      <li>카메라 또는 마이크 데이터</li>
-      <li>연락처, 사진, 캘린더</li>
-      <li>광고 식별자 (IDFA)</li>
-      <li>사용자가 작성하거나 편집하는 코드의 내용</li>
-      <li>기기 사용 패턴 또는 행동 분석 데이터</li>
-    </ul>
-
-    <h2>6. 데이터 삭제</h2>
-    <p>사용자는 언제든지 앱 내에서 데이터를 삭제할 수 있습니다.</p>
-    <ul>
-      <li>호스트 삭제 — 개별 호스트의 구성 정보, 연결 토큰, 최근 폴더 기록이 삭제됩니다.</li>
-      <li>로그아웃 — GitHub 또는 Microsoft 인증 쿠키가 삭제됩니다.</li>
-      <li>캐시 삭제 — 설정에서 WebKit 캐시를 삭제할 수 있습니다.</li>
-      <li>앱 삭제 — 앱을 삭제하면 모든 데이터가 기기에서 완전히 제거됩니다.</li>
+      <li data-i18n="privacy.s5.item1">위치 정보</li>
+      <li data-i18n="privacy.s5.item2">카메라 또는 마이크 데이터</li>
+      <li data-i18n="privacy.s5.item3">연락처, 사진, 캘린더</li>
+      <li data-i18n="privacy.s5.item4">광고 식별자 (IDFA)</li>
+      <li data-i18n="privacy.s5.item5">사용자가 작성하거나 편집하는 코드의 내용</li>
+      <li data-i18n="privacy.s5.item6">기기 사용 패턴 또는 행동 분석 데이터</li>
     </ul>
 
-    <h2>7. 아동의 개인정보</h2>
-    <p>PocketCode는 만 14세 미만 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
+    <h2 data-i18n="privacy.s6.title">6. 데이터 삭제</h2>
+    <p data-i18n="privacy.s6.intro">사용자는 언제든지 앱 내에서 데이터를 삭제할 수 있습니다.</p>
+    <ul>
+      <li data-i18n="privacy.s6.item1">호스트 삭제 — 개별 호스트의 구성 정보, 연결 토큰, 최근 폴더 기록이 삭제됩니다.</li>
+      <li data-i18n="privacy.s6.item2">로그아웃 — GitHub 또는 Microsoft 인증 쿠키가 삭제됩니다.</li>
+      <li data-i18n="privacy.s6.item3">캐시 삭제 — 설정에서 WebKit 캐시를 삭제할 수 있습니다.</li>
+      <li data-i18n="privacy.s6.item4">앱 삭제 — 앱을 삭제하면 모든 데이터가 기기에서 완전히 제거됩니다.</li>
+    </ul>
 
-    <h2>8. 변경 사항</h2>
-    <p>본 개인정보 처리방침은 필요에 따라 변경될 수 있습니다. 변경 시 이 페이지를 통해 공지하며, 시행일을 업데이트합니다.</p>
+    <h2 data-i18n="privacy.s7.title">7. 아동의 개인정보</h2>
+    <p data-i18n="privacy.s7.text">PocketCode는 만 14세 미만 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
 
-    <h2>9. 문의</h2>
-    <p>개인정보 처리방침에 관한 문의 사항이 있으시면 <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener">GitHub</a>를 통해 연락해 주세요.</p>
+    <h2 data-i18n="privacy.s8.title">8. 변경 사항</h2>
+    <p data-i18n="privacy.s8.text">본 개인정보 처리방침은 필요에 따라 변경될 수 있습니다. 변경 시 이 페이지를 통해 공지하며, 시행일을 업데이트합니다.</p>
+
+    <h2 data-i18n="privacy.s9.title">9. 문의</h2>
+    <p data-i18n-html="privacy.s9.text">개인정보 처리방침에 관한 문의 사항이 있으시면 <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener">GitHub</a>를 통해 연락해 주세요.</p>
   </div>
 
   <footer>
     <div class="footer-inner">
       <p class="footer-copy">&copy; 2026 PocketCode.</p>
       <div class="footer-links">
-        <a href="/">홈</a>
-        <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener">문의 및 피드백</a>
+        <a href="/" data-i18n="footer.home">홈</a>
+        <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener" data-i18n="footer.feedback">문의 및 피드백</a>
       </div>
     </div>
   </footer>
+
+  <script src="i18n.js"></script>
 
 </body>
 </html>
