@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>개인정보 처리방침 — PocketCode</title>
+  <meta name="description" content="PocketCode 앱의 개인정보 처리방침" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/app-icon.png" />
+  <style>
+    :root {
+      --bg:           #1e1e1e;
+      --bg-elevated:  #252526;
+      --bg-card:      #2d2d2d;
+      --border:       #3e3e42;
+      --border-muted: #2a2a2a;
+      --blue:         #007acc;
+      --blue-light:   #1f9cf0;
+      --teal:         #4ec9b0;
+      --text-primary:   #d4d4d4;
+      --text-secondary: #9d9d9d;
+      --text-muted:     #6a6a6a;
+      --text-white:     #ffffff;
+      --font-sans:  -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+      --font-mono:  'SF Mono', 'Cascadia Code', 'Fira Code', 'Menlo', monospace;
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--blue-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .topline {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 50%, var(--blue) 100%);
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(30, 30, 30, 0.88);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border-muted);
+    }
+    .nav-inner {
+      max-width: 800px; margin: 0 auto; padding: 0 24px; height: 52px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-brand img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-brand-name { font-size: 15px; font-weight: 600; color: var(--text-white); letter-spacing: -0.2px; }
+
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 64px 24px 120px;
+    }
+
+    .page-title {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      color: var(--text-white);
+      letter-spacing: -0.025em;
+      margin-bottom: 8px;
+    }
+
+    .page-meta {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      font-family: var(--font-mono);
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-top: 48px;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    h2::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    p, li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li { margin-bottom: 6px; }
+
+    strong { color: var(--text-primary); font-weight: 600; }
+
+    .highlight-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+
+    .highlight-box p { margin-bottom: 0; }
+
+    footer {
+      border-top: 1px solid var(--border-muted);
+      background: var(--bg-elevated);
+    }
+    .footer-inner {
+      max-width: 800px; margin: 0 auto; padding: 32px 24px;
+      display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
+    }
+    .footer-copy { font-size: 13px; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: var(--text-muted); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    @media (max-width: 640px) {
+      .content { padding: 40px 20px 80px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topline"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-brand" href="/">
+        <img src="assets/app-icon.png" alt="PocketCode" />
+        <span class="nav-brand-name">PocketCode</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <h1 class="page-title">개인정보 처리방침</h1>
+    <p class="page-meta">시행일: 2026년 2월 18일</p>
+
+    <div class="highlight-box">
+      <p><strong>PocketCode는 사용자의 개인정보를 외부 서버로 수집하거나 전송하지 않습니다.</strong> 모든 데이터는 사용자의 기기에만 저장되며, 앱 개발자는 이에 접근할 수 없습니다.</p>
+    </div>
+
+    <h2>1. 수집하는 정보</h2>
+    <p>PocketCode는 앱 기능 제공을 위해 다음 정보를 <strong>사용자의 기기 내에서만</strong> 처리합니다.</p>
+    <ul>
+      <li><strong>호스트 구성 정보</strong> — 사용자가 등록한 개발 서버의 이름, 주소, 포트, 연결 방식 등</li>
+      <li><strong>최근 폴더 기록</strong> — 접속한 폴더 경로 및 마지막 접근 시간</li>
+      <li><strong>인증 정보</strong> — GitHub 또는 Microsoft 계정의 OAuth 인증 쿠키 (WebKit에서 관리)</li>
+      <li><strong>연결 토큰</strong> — serve-web 방식의 호스트에 필요한 접속 토큰 (iOS 키체인에 암호화 저장)</li>
+      <li><strong>앱 잠금 설정</strong> — 생체 인증 사용 여부 및 잠금 타이밍 설정</li>
+    </ul>
+
+    <h2>2. 정보의 저장 위치</h2>
+    <p>모든 데이터는 사용자의 기기 내에 저장되며, 외부 서버로 전송되지 않습니다.</p>
+    <ul>
+      <li><strong>기기 내 데이터베이스</strong> (SwiftData) — 호스트 목록, 최근 폴더</li>
+      <li><strong>iOS 키체인</strong> — 연결 토큰 (iOS에 의해 암호화)</li>
+      <li><strong>WebKit 저장소</strong> — 인증 쿠키, VS Code 에디터 캐시</li>
+      <li><strong>UserDefaults</strong> — 앱 잠금 설정 등 환경 설정</li>
+    </ul>
+
+    <h2>3. 외부 서비스 연동</h2>
+    <p>PocketCode는 다음 서비스에 직접 연결됩니다. 이는 앱의 핵심 기능을 위한 것이며, 분석이나 추적 목적이 아닙니다.</p>
+    <ul>
+      <li><strong>vscode.dev</strong> — VS Code 웹 에디터 인터페이스</li>
+      <li><strong>github.com</strong> — GitHub 계정 인증</li>
+      <li><strong>login.microsoftonline.com</strong> — Microsoft 계정 인증</li>
+      <li><strong>사용자가 등록한 개발 서버</strong> — VS Code Tunnel 또는 serve-web 연결</li>
+    </ul>
+    <p>PocketCode는 Firebase, Amplitude, Sentry 등 <strong>외부 분석 또는 오류 보고 SDK를 사용하지 않습니다.</strong></p>
+
+    <h2>4. 생체 인증</h2>
+    <p>PocketCode는 앱 잠금 기능을 위해 Face ID 또는 Touch ID를 사용할 수 있습니다. 생체 인식 데이터는 iOS에 의해 처리되며, PocketCode는 생체 정보를 직접 저장하거나 접근하지 않습니다. 인증 결과(성공 또는 실패)만 앱 내에서 확인합니다.</p>
+
+    <h2>5. 수집하지 않는 정보</h2>
+    <p>PocketCode는 다음 정보를 수집하지 않습니다.</p>
+    <ul>
+      <li>위치 정보</li>
+      <li>카메라 또는 마이크 데이터</li>
+      <li>연락처, 사진, 캘린더</li>
+      <li>광고 식별자 (IDFA)</li>
+      <li>사용자가 작성하거나 편집하는 코드의 내용</li>
+      <li>기기 사용 패턴 또는 행동 분석 데이터</li>
+    </ul>
+
+    <h2>6. 데이터 삭제</h2>
+    <p>사용자는 언제든지 앱 내에서 데이터를 삭제할 수 있습니다.</p>
+    <ul>
+      <li>호스트 삭제 — 개별 호스트의 구성 정보, 연결 토큰, 최근 폴더 기록이 삭제됩니다.</li>
+      <li>로그아웃 — GitHub 또는 Microsoft 인증 쿠키가 삭제됩니다.</li>
+      <li>캐시 삭제 — 설정에서 WebKit 캐시를 삭제할 수 있습니다.</li>
+      <li>앱 삭제 — 앱을 삭제하면 모든 데이터가 기기에서 완전히 제거됩니다.</li>
+    </ul>
+
+    <h2>7. 아동의 개인정보</h2>
+    <p>PocketCode는 만 14세 미만 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
+
+    <h2>8. 변경 사항</h2>
+    <p>본 개인정보 처리방침은 필요에 따라 변경될 수 있습니다. 변경 시 이 페이지를 통해 공지하며, 시행일을 업데이트합니다.</p>
+
+    <h2>9. 문의</h2>
+    <p>개인정보 처리방침에 관한 문의 사항이 있으시면 <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener">GitHub</a>를 통해 연락해 주세요.</p>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-copy">&copy; 2026 PocketCode.</p>
+      <div class="footer-links">
+        <a href="/">홈</a>
+        <a href="https://github.com/pocketcode-app/support" target="_blank" rel="noopener">문의 및 피드백</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PocketCode App Store Screenshots — iPad</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+    padding: 80px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', system-ui, sans-serif;
+  }
+
+  .slide {
+    width: 2048px;
+    height: 2732px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Background */
+  .slide-bg {
+    position: absolute;
+    inset: 0;
+    background: #08080D;
+  }
+
+  .slide-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Accent glow behind device */
+  .accent-glow {
+    position: absolute;
+    bottom: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1400px;
+    height: 1400px;
+    border-radius: 50%;
+    filter: blur(180px);
+    opacity: 0.10;
+    pointer-events: none;
+  }
+
+  .slide-1 .accent-glow { background: #C586C0; }
+  .slide-2 .accent-glow { background: #007ACC; }
+  .slide-3 .accent-glow { background: #4CAF50; }
+
+  /* Top line accent */
+  .top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+
+  .slide-1 .top-accent { background: linear-gradient(90deg, transparent, #C586C0, transparent); }
+  .slide-2 .top-accent { background: linear-gradient(90deg, transparent, #007ACC, transparent); }
+  .slide-3 .top-accent { background: linear-gradient(90deg, transparent, #4CAF50, transparent); }
+
+  /* Brand mark */
+  .brand {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 10;
+  }
+
+  .brand img {
+    width: 64px;
+    height: 64px;
+    border-radius: 15px;
+  }
+
+  .brand-name {
+    font-size: 40px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: -0.5px;
+  }
+
+  /* Text content */
+  .text-content {
+    position: absolute;
+    top: 280px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 10;
+    padding: 0 200px;
+  }
+
+  .headline {
+    font-size: 128px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -4px;
+    line-height: 1.12;
+    margin-bottom: 48px;
+  }
+
+  .slide-1 .headline-accent { color: #D4A0D0; }
+  .slide-2 .headline-accent { color: #5AADEE; }
+  .slide-3 .headline-accent { color: #6FCF73; }
+
+  .subtitle {
+    font-size: 52px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.55;
+    letter-spacing: -0.5px;
+  }
+
+  /* Feature pill */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 16px 40px;
+    border-radius: 100px;
+    margin-bottom: 52px;
+  }
+
+  .slide-1 .pill { background: rgba(197,134,192,0.12); color: #D4A0D0; border: 1px solid rgba(197,134,192,0.25); }
+  .slide-2 .pill { background: rgba(0,122,204,0.12); color: #5AADEE; border: 1px solid rgba(0,122,204,0.25); }
+  .slide-3 .pill { background: rgba(76,175,80,0.12); color: #6FCF73; border: 1px solid rgba(76,175,80,0.25); }
+
+  .pill-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .slide-1 .pill-dot { background: #C586C0; }
+  .slide-2 .pill-dot { background: #007ACC; }
+  .slide-3 .pill-dot { background: #4CAF50; }
+
+  /* iPad mockup */
+  .device-container {
+    position: absolute;
+    bottom: -300px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .ipad {
+    width: 1500px;
+    padding: 24px;
+    background: #1A1A1E;
+    border-radius: 36px;
+    border: 2.5px solid #3A3A40;
+    box-shadow:
+      0 60px 120px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(255,255,255,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    position: relative;
+  }
+
+  .ipad-screen {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #1E1E1E;
+    line-height: 0;
+  }
+
+  .ipad-screen img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Per-slide device shadow glow */
+  .slide-1 .ipad {
+    box-shadow:
+      0 60px 120px rgba(0,0,0,0.7),
+      0 0 100px rgba(197,134,192,0.10),
+      0 0 0 1px rgba(255,255,255,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  .slide-2 .ipad {
+    box-shadow:
+      0 60px 120px rgba(0,0,0,0.7),
+      0 0 100px rgba(0,122,204,0.10),
+      0 0 0 1px rgba(255,255,255,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  .slide-3 .ipad {
+    box-shadow:
+      0 60px 120px rgba(0,0,0,0.7),
+      0 0 100px rgba(76,175,80,0.10),
+      0 0 0 1px rgba(255,255,255,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: AI 에이전트 -->
+<div class="slide slide-1" id="slide-1">
+  <div class="slide-bg"></div>
+  <div class="top-accent"></div>
+  <div class="accent-glow"></div>
+
+  <div class="brand">
+    <img src="assets/app-icon.png" alt="PocketCode" />
+    <span class="brand-name">PocketCode</span>
+  </div>
+
+  <div class="text-content">
+    <div class="pill">
+      <span class="pill-dot"></span>
+      AI CODING AGENT
+    </div>
+    <h1 class="headline">AI 에이전트,<br/><span class="headline-accent">그대로</span></h1>
+    <p class="subtitle">Claude, Codex, Gemini 같은<br/>AI 코딩 에이전트를 태블릿에서 바로 사용하세요</p>
+  </div>
+
+  <div class="device-container">
+    <div class="ipad">
+      <div class="ipad-screen">
+        <img src="assets/screenshot-editor-ipad.png" alt="Claude Code on iPad" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 2: 호스트 관리 -->
+<div class="slide slide-2" id="slide-2">
+  <div class="slide-bg"></div>
+  <div class="top-accent"></div>
+  <div class="accent-glow"></div>
+
+  <div class="brand">
+    <img src="assets/app-icon.png" alt="PocketCode" />
+    <span class="brand-name">PocketCode</span>
+  </div>
+
+  <div class="text-content">
+    <div class="pill">
+      <span class="pill-dot"></span>
+      HOST MANAGEMENT
+    </div>
+    <h1 class="headline">여러 서버를<br/><span class="headline-accent">한눈에 관리</span></h1>
+    <p class="subtitle">VS Code Tunnel과 serve-web<br/>두 가지 연결 방식을 지원합니다</p>
+  </div>
+
+  <div class="device-container">
+    <div class="ipad">
+      <div class="ipad-screen">
+        <img src="assets/screenshot-hosts-ipad.png" alt="Host management on iPad" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: 설치 없이 바로 연결 -->
+<div class="slide slide-3" id="slide-3">
+  <div class="slide-bg"></div>
+  <div class="top-accent"></div>
+  <div class="accent-glow"></div>
+
+  <div class="brand">
+    <img src="assets/app-icon.png" alt="PocketCode" />
+    <span class="brand-name">PocketCode</span>
+  </div>
+
+  <div class="text-content">
+    <div class="pill">
+      <span class="pill-dot"></span>
+      ZERO INSTALL
+    </div>
+    <h1 class="headline">설치 없이<br/><span class="headline-accent">바로 연결</span></h1>
+    <p class="subtitle">데스크톱에 별도 프로그램이 필요 없습니다<br/>VS Code 기본 터널 기능만으로 연결</p>
+  </div>
+
+  <div class="device-container">
+    <div class="ipad">
+      <div class="ipad-screen">
+        <img src="assets/screenshot-vscode-ipad.png" alt="VS Code on iPad" />
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
